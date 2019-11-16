@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "389009002907",
+    "firebase_url": "https://bank-of-palestine-9750e.firebaseio.com",
+    "project_id": "bank-of-palestine-9750e",
+    "storage_bucket": "bank-of-palestine-9750e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389009002907:android:9937b1760e7f774626113e",
+        "android_client_info": {
+          "package_name": "com.mohanad.myownbank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389009002907-b07f6lqlio3u7bdprdf0mqagnuu3q19e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9Ot-ohPHNIXB7lYxzXgx-HuaKyFJi7VI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389009002907-b07f6lqlio3u7bdprdf0mqagnuu3q19e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

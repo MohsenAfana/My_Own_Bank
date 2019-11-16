@@ -1,0 +1,75 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#B41C76</item>
+        <item name="colorPrimaryDark">#B7B41C76</item>
+        <item name="colorAccent">#B41C76</item>
+    </style>
+
+
+
+
+    <style name="balance">
+        <item name="android:fontFamily">@font/rajdhani</item>
+        <item name="android:gravity">start|center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_gravity">start</item>
+
+    </style>
+    <style name="totalBalance">
+        <item name="android:fontFamily">@font/quicksand_light</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_gravity">start</item>
+
+    </style>
+    <style name="totalBalance1">
+        <item name="android:fontFamily">@font/quicksand_light</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#B41C76</item>
+        <item name="android:layout_gravity">center</item>
+
+    </style>
+    <style name="AccountNumber">
+        <item name="android:fontFamily">@font/rajdhani</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#fff</item>
+
+    </style>
+    <style name="AccountNo">
+        <item name="android:fontFamily">@font/quicksand_light</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#fff</item>
+
+    </style>
+    <style name="HolderName">
+        <item name="android:fontFamily">@font/rajdhani</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#fff</item>
+
+    </style>
+    <style name="Transactions">
+        <item name="android:fontFamily">@font/rajdhani</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#B41C76</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+
+
+
+</resources>

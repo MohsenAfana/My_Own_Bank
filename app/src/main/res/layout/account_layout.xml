@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="4dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#EFF0F4"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="3dp"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:padding="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:fontFamily="@font/rajdhani"
+                    android:id="@+id/account_name_adapter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CURRENT ACCOUNT/EMPLOYEE SALARY"
+                    android:textColor="#B41C76"
+                    android:textStyle="bold"
+                    android:layout_marginStart="4dp"
+                    android:layout_gravity="center"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:fontFamily="@font/rajdhani"
+                    android:id="@+id/account_balance_adapter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$120"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:textStyle="bold"
+                    android:textColor="#000"/>
+            </LinearLayout>
+            <TextView
+                android:fontFamily="@font/rajdhani"
+                android:id="@+id/account_number_adapter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4520182364200"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

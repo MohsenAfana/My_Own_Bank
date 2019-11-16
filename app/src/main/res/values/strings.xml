@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">My Own BAnk</string>
+    <string name="login">Login</string>
+    <string name="Banking">Banking App</string>
+    <string name="email">Email</string>
+    <string name="enter_email">Enter your Email</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter password</string>
+    <string name="register">REGISTER</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="signup_login_hint">Already have an account? Sign In</string>
+    <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+    <string name="login_name_hint">Name</string>
+    <string name="login_mobile_number_hint">Mobile Number</string>
+    <string name="welcome">Welcome to\n Banking App..</string>
+    <string name="balance">Cash Card</string>
+    <string name="masterCard">Master Card</string>
+    <string name="BankingApp">Banking App</string>
+    <string name="CardHolder">MOHANAD O. ALKRUNZ</string>
+    <string name="CardNumber">53** **** ** *875</string>
+    <string name="Valid">Valid\nthrow</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Withdrawal">withdrawal</string>
+    <string name="deposit">deposit</string>
+    <string name="Rights">Developed by\n Eng.Moahand Osama Alkrunz\n+972599908953</string>
+    <string name="Transactions">Transactions</string>
+    <string name="campaigns">Campaigns</string>
+    <string name="cards">Cards</string>
+    <string name="accountNo">Account Number</string>
+    <string name="send_to">Send to Others</string>
+    <string name="from">From : </string>
+    <string name="select_an_account">Select an Account</string>
+    <string name="to">To :</string>
+    <string name="amount">Amount</string>
+    <string name="select_amount">Select amount</string>
+    <string name="description">Description</string>
+    <string name="send">Send</string>
+</resources>

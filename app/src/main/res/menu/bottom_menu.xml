@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/ic_icons8_home"/>
+    <item
+        android:id="@+id/accounts"
+        android:title="Accounts"
+        android:icon="@drawable/ic_credit_cards_payment"/>
+    <item
+        android:id="@+id/atm"
+        android:title="ATM's and Branches"
+        android:icon="@drawable/ic_map_location"/>
+    <item
+        android:id="@+id/transfer"
+        android:title="Transfer"
+
+        android:icon="@drawable/ic_transfer"/>
+</menu>
