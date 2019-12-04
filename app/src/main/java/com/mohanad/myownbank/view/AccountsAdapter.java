@@ -14,7 +14,7 @@ import com.mohanad.myownbank.model.entity.Account;
 import java.util.List;
 
 public class AccountsAdapter extends RecyclerView.Adapter {
-    List<Account>accounts;
+    private List<Account> accounts;
 
     public AccountsAdapter(List<Account> accounts) {
         this.accounts = accounts;
@@ -23,7 +23,7 @@ public class AccountsAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.account_layout, parent, false);
         AccountsAdapter.AccountHolder accountHolder = new AccountsAdapter.AccountHolder(view);
         return accountHolder;
     }
@@ -39,7 +39,7 @@ public class AccountsAdapter extends RecyclerView.Adapter {
         return accounts.size();
     }
 
-    class AccountHolder extends RecyclerView.ViewHolder{
+    class AccountHolder extends RecyclerView.ViewHolder {
         TextView account_name;
         TextView balance;
         TextView account_number;
@@ -48,16 +48,17 @@ public class AccountsAdapter extends RecyclerView.Adapter {
         public AccountHolder(@NonNull View itemView) {
             super(itemView);
 
-        account_name=itemView.findViewById(R.id.account_name_adapter);
-        balance=itemView.findViewById(R.id.account_balance_adapter);
-        account_number=itemView.findViewById(R.id.account_number_adapter);
+            account_name = itemView.findViewById(R.id.account_name_adapter);
+            balance = itemView.findViewById(R.id.account_balance_adapter);
+            account_number = itemView.findViewById(R.id.account_number_adapter);
         }
 
 
         public void bind(int position) {
-            account_name.setText(accounts.get(position).getAccount_name());
-            account_number.setText(accounts.get(position).getAccount_number());
-            balance.setText(accounts.get(position).getBalance()+"$");
+            account_name.setText(accounts.get(position).getAccountType());
+            account_number.setText(accounts.get(position).getFullAccountNumber()+"");
+            balance.setText(accounts.get(position).getBalance() + "$");
+
         }
     }
 }

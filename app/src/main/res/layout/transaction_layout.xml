@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_height="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="4dp">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                     android:id="@+id/transaction_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/deposit"
+                    tools:text="@string/deposit"
                     android:textColor="#FF5656"
                     android:layout_marginStart="4dp"
                     android:layout_gravity="center"/>
@@ -37,7 +38,7 @@
                     android:id="@+id/transaction_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jawwal paying bill"
+                    tools:text="Jawwal paying bill"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:ems="10"
@@ -51,18 +52,64 @@
                     android:id="@+id/transaction_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$120"
+                    tools:text="$120"
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
                     android:textStyle="bold"
                     android:textColor="#000"/>
             </LinearLayout>
-            <TextView
-                android:fontFamily="@font/rajdhani"
-                android:id="@+id/transaction_date"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mon, 28-Oct-19 ,9:08 PM"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:fontFamily="@font/rajdhani"
+                    android:id="@+id/transaction_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Mon, 28-Oct-19 ,9:08 PM"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:fontFamily="@font/rajdhani"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginStart="2dp"
+                    android:text="@string/from"/>
+                <TextView
+                    android:fontFamily="@font/rajdhani"
+                    android:id="@+id/transaction_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginStart="2dp"
+                    tools:text="000000"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:fontFamily="@font/rajdhani"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginStart="2dp"
+                    android:text="@string/to"/>
+                <TextView
+                    android:fontFamily="@font/rajdhani"
+                    android:id="@+id/transaction_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginStart="2dp"
+                    tools:text="000000"/>
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

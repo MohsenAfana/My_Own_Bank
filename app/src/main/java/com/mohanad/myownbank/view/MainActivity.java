@@ -5,44 +5,61 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.mohanad.myownbank.MapsActivity;
 import com.mohanad.myownbank.R;
-import com.mohanad.myownbank.presenter.IMainPresenter;
-import com.mohanad.myownbank.presenter.MainPresenter;
+import com.mohanad.myownbank.viewmodel.MainViewModel;
 
-public class MainActivity extends AppCompatActivity implements IMainActivity {
+public class MainActivity extends AppCompatActivity {
     FrameLayout frameLayout;
     TextView holderName;
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
-    IMainPresenter iMainPresenter;
-
-
+    MainViewModel mainViewModel;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseUser user;
+    private FirebaseAuth auth;
+    private LottieAnimationView animationView;
+    private int TIME_OUT=3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        iMainPresenter=new MainPresenter(this,this);
-        decelerations();
 
+        declaration();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                animationView.setVisibility(View.GONE);
 
-
+            }
+        },TIME_OUT);
+        displayHolderName();
     }
 
 
-    public void decelerations() {
+    public void declaration() {
+        animationView=findViewById(R.id.hom_loading);
 
-        holderName=findViewById(R.id.holderName);
-        frameLayout=findViewById(R.id.container);
+        mainViewModel = new MainViewModel();
+        holderName = findViewById(R.id.holderName);
+        frameLayout = findViewById(R.id.container);
         bottomNavigationView = findViewById(R.id.bottom_bar);
         toolbar = findViewById(R.id.toolBar);
         toolbar.inflateMenu(R.menu.tool_bar_menu);
@@ -50,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 toolbarListeners(menuItem);
-
                 return false;
             }
         });
@@ -62,37 +78,38 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
             }
         });
 
+
     }
 
     private void toolbarListeners(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.logout:
-            //LOGOUT
-                iMainPresenter.logout();
-                iMainPresenter.openLoginActivity();
+                mainViewModel.logout();
+                openLoginActivity();
+                Toast.makeText(MainActivity.this,"clicked",Toast.LENGTH_LONG).show();
                 break;
 
         }
     }
-
-
 
     private void bottomListeners(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).addToBackStack(null).commit();
                 break;
             case R.id.accounts:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,new AccountsFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new AccountsFragment()).addToBackStack(null).commit();
                 Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
                 break;
             case R.id.atm:
                 Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
+                Intent intent   =new Intent(this, MapsActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.transfer:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,new TransferFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new TransferFragment()).addToBackStack(null).commit();
                 Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
 
                 break;
@@ -100,12 +117,34 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
         }
     }
 
-
-
-    @Override
     public void openLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
+    public void displayHolderName(){
+        auth=FirebaseAuth.getInstance();
+        user=auth.getCurrentUser();
+        String temp=user.getEmail();
+        String id=temp.substring(0,6);
+
+
+        mDatabaseReference=FirebaseDatabase.getInstance().getReference().child("User").child(id);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                holderName.setText(dataSnapshot.child("fullName").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mDatabaseReference.addValueEventListener(postListener);
+
+    }
+
 }

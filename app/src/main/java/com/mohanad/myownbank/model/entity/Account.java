@@ -1,52 +1,89 @@
 package com.mohanad.myownbank.model.entity;
 
+
+import java.util.List;
+
 public class Account {
-    private  String account_number;
-    private Transaction[] transactions;
-    private float balance;
-    private String account_name;
 
-    public Account(String account_number, float balance,String account_name) {
-        this.account_number = account_number;
-        this.balance = balance;
-        this.account_name=account_name;
+    private String accountType;
+    private String IBAN;
+    private double balance;
+    private String accountCurrency;
+    private String fullAccountNumber;
+    private String fullName;
+    private String mobileNumber;
+    private List<Transactions> tranactions;
+    private List<Card> cards;
+
+    public String getIBAN() {
+        return IBAN;
     }
 
-    public Account(String account_number, Transaction[] transactions, float balance) {
-        this.account_number = account_number;
-        this.transactions = transactions;
-        this.balance = balance;
+    public void setIBAN(String IBAN) {
+        this.IBAN = IBAN;
     }
 
-    public String getAccount_number() {
-        return account_number;
-    }
-
-    public void setAccount_number(String account_number) {
-        this.account_number = account_number;
-    }
-
-    public Transaction[] getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Transaction[] transactions) {
-        this.transactions = transactions;
-    }
-
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
-    public String getAccount_name() {
-        return account_name;
+    public String getAccountCurrency() {
+        return accountCurrency;
     }
 
-    public void setAccount_name(String account_name) {
-        this.account_name = account_name;
+    public void setAccountCurrency(String accountCurrency) {
+        this.accountCurrency = accountCurrency;
+    }
+
+    public String getFullAccountNumber() {
+        return fullAccountNumber;
+    }
+
+    public void setFullAccountNumber(String fullAccountNumber) {
+        this.fullAccountNumber = fullAccountNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public List<Transactions> getTranactions() {
+        return tranactions;
+    }
+
+    public void setTranactions(List<Transactions> tranactions) {
+        this.tranactions = tranactions;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

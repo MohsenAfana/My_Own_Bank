@@ -35,7 +35,22 @@
     <string name="select_an_account">Select an Account</string>
     <string name="to">To :</string>
     <string name="amount">Amount</string>
-    <string name="select_amount">Select amount</string>
+    <string name="select_amount">00.0 $</string>
     <string name="description">Description</string>
     <string name="send">Send</string>
+    <string name="eXCHANGE_RATES_TO_NIS">RATES TO NIS</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="totalBalance">Total Balance</string>
+    <string name="USD">USD</string>
+    <string name="EUR">EUR</string>
+    <string name="TUR">TUR</string>
+    <string name="M1500">1500$</string>
+    <string name="confirm">Confirm Information</string>
+
+    <string-array name="text">
+    <item>Welcome in bank of Palestine</item>
+    <item>Our services rewards you more.</item>
+        <item>We continue to lead the digital</item>
+    </string-array>
+
 </resources>

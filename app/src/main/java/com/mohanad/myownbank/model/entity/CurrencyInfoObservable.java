@@ -1,7 +1,5 @@
 package com.mohanad.myownbank.model.entity;
 
-import com.mohanad.myownbank.model.entity.Currency;
-
 import java.util.Observable;
 
 public class CurrencyInfoObservable extends Observable {

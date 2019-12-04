@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="fill_parent"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".view.HomeFragment"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:visibility="visible"
+        android:background="#fff"
         >
+
+
 
         <LinearLayout
 
@@ -31,13 +36,13 @@
                 android:background="#B41C76" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Total Balance"
+                android:text="@string/totalBalance"
                 android:textSize="12sp" />
 
 
@@ -50,34 +55,34 @@
             app:layout_constraintWidth_percent=".39"
             app:layout_constraintHeight_percent=".3"
             android:layout_marginTop="24dp"
-            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
             app:cardCornerRadius="14dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <LinearLayout
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="2dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="18dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="2dp"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="18dp"
-                    android:text="Buy"
+                     android:textSize="12sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="@string/eXCHANGE_RATES_TO_NIS"
                     android:textColor="#FFFFFF"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sell"
-                    android:textColor="#FFFFFF"/>
+
 
             </LinearLayout>
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="4dp"
@@ -96,23 +101,32 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="USD"
+                        android:text="@string/USD"
                         android:textColor="#FFFFFF"
+                        android:fontFamily="@font/digital"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
                         />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="JOD"
-                        android:textColor="#FFFFFF"                    />
+                        android:text="@string/EUR"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="@font/digital"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="EUR"
-                        android:textColor="#FFFFFF"                    />
+                        android:text="@string/TUR"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="@font/digital"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
@@ -124,63 +138,43 @@
                     android:layout_marginStart="2dp"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/current"
+                        android:id="@+id/usd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="3.48"
+                        android:singleLine="true"
+                        android:ems="3"
                         android:textColor="#FFFFFF"
+                        android:fontFamily="@font/digital"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
                         />
                     <TextView
+                        android:id="@+id/euro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="4.91"
-                        android:textColor="#FFFFFF"                    />
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="@font/digital"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
                     <TextView
+                        android:id="@+id/turkishLira"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="3.85"
-                        android:textColor="#FFFFFF"                    />
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="@font/digital"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        />
 
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="2dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:text="3.52"
-                        android:textColor="#FFFFFF"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:text="4.98"
-                        android:textColor="#FFFFFF"                    />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:text="3.89"
-                        android:textColor="#FFFFFF"                    />
 
-
-                </LinearLayout>
             </LinearLayout>
 
 
@@ -192,14 +186,15 @@
             app:layout_constraintWidth_percent=".39"
             app:layout_constraintHeight_percent=".3"
             android:layout_marginTop="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginEnd="24dp"
             app:cardCornerRadius="14dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <TextView
+                android:id="@+id/total_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$1500"
+                tools:text="@string/M1500"
                 style="@style/totalBalance1"/>
             <ProgressBar
 
@@ -209,7 +204,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/background_circle"
                 android:backgroundTintMode="add"
-                android:max="12000" android:progress="1500"
+                android:max="12000" android:progress="0"
 
                 android:progressDrawable="@drawable/circle" />
 
@@ -235,17 +230,21 @@
                 style="@style/Transactions"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/campaigns_pager" />
-            <androidx.viewpager.widget.ViewPager
-                android:background="#fff"
-                android:id="@+id/accounts_pager"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight=".5"
-                app:layout_constraintTop_toBottomOf="@id/accounts"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/cards_recycler"
+               android:layout_marginTop="8dp"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_weight=".5"
+               app:layout_constraintTop_toBottomOf="@id/accounts"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               android:orientation="horizontal"
+
+             />
+
+
+
 
             <TextView
                 android:id="@+id/campaigns"

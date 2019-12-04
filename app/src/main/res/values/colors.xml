@@ -16,7 +16,9 @@
     <!--colors for light mode-->
     <color name="contentTextColor">#020000</color>
     <color name="whiteTextColor1">#fff</color>
-
+    <color name="colorPrimary2">#FF9800</color>
+    <color name="colorPrimaryDark2">#F57C00</color>
+    <color name="colorAccent2">#4CAF50</color>
 
     <!--colros for card-->
     <color name="whiteCardColor">#fff</color>

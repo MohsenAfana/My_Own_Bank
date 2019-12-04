@@ -23,7 +23,7 @@
       tools:listitem="@layout/account_layout"
         />
     <TextView
-        android:id="@+id/transactions"
+        android:id="@+id/tranactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
        android:layout_marginTop="12dp"

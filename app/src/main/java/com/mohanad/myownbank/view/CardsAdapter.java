@@ -1,59 +1,66 @@
 package com.mohanad.myownbank.view;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-
+import androidx.recyclerview.widget.RecyclerView;
 import com.mohanad.myownbank.R;
-import com.mohanad.myownbank.model.entity.Account;
+import com.mohanad.myownbank.model.entity.Card;
 
 import java.util.List;
 
-public class CardsAdapter extends PagerAdapter {
-    List<Account> cards;
-    Context context;
-    public CardsAdapter( List<Account> cards,Context context) {
-        this.context=context;
+public class CardsAdapter extends RecyclerView.Adapter {
+    private List<Card> cards;
+
+    public CardsAdapter(List<Card> cards) {
         this.cards = cards;
-    }
-
-    @Override
-    public int getCount() {
-        return cards.size();
-    }
-
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view==object;
     }
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        //  ImageView imageView= (ImageView) LayoutInflater.from(getContext()).inflate(R.layout.campaigns_layout,container,false);
-        //  imageView.setImageResource(cards[position]);
-        FrameLayout frameLayout =(FrameLayout) LayoutInflater.from(this.context).inflate(R.layout.card_layout,container,false);
-      //  TextView balance=frameLayout.findViewById(R.id.balanceAd);
-       // balance.setText("$ "+cards.get(position).getBalance());
-      //  TextView accountNo=frameLayout.findViewById(R.id.accountNumberAd);
-      //  accountNo.setText(cards.get(position).getAccount_number());
-        container.addView(frameLayout);
-
-        return frameLayout;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        CardsAdapter.CardHolder cardHolder = new CardsAdapter.CardHolder(view);
+        return cardHolder;
     }
 
     @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        CardsAdapter.CardHolder cardHolder = (CardsAdapter.CardHolder) holder;
+        cardHolder.bind(position);
     }
 
     @Override
-    public float getPageWidth(int position) {
-        return 0.45f;
+    public int getItemCount() {
+        return cards.size();
     }
-}
+
+    class CardHolder extends RecyclerView.ViewHolder {
+        TextView holder;
+        TextView number;
+        TextView validate;
+
+
+        public CardHolder(@NonNull View itemView) {
+            super(itemView);
+
+            holder = itemView.findViewById(R.id.cardHolder);
+            number = itemView.findViewById(R.id.card_number);
+            validate = itemView.findViewById(R.id.validate);
+        }
+
+
+
+
+        public void bind(int position) {
+
+                holder.setText(cards.get(position).getCardHolder());
+                number.setText(cards.get(position).getCardNumber());
+                validate.setText(cards.get(position).getValidate());
+
+
+        }
+    }}

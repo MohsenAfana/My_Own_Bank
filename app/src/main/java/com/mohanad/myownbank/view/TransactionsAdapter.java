@@ -11,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mohanad.myownbank.R;
-import com.mohanad.myownbank.model.entity.Transaction;
+import com.mohanad.myownbank.model.entity.Transactions;
 
 import java.util.List;
 
 public class TransactionsAdapter extends RecyclerView.Adapter {
-    List<Transaction> transactions;
+    List<Transactions> tranactions;
 
-    public TransactionsAdapter(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public TransactionsAdapter(List<Transactions> tranactions) {
+        this.tranactions = tranactions;
     }
 
     @NonNull
@@ -38,12 +38,12 @@ public class TransactionsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return transactions.size();
+        return tranactions.size();
     }
 
     class TransactionHolder extends RecyclerView.ViewHolder {
 
-        TextView type, desc, amount, date;
+        TextView type, desc, amount, date,to,from;
 
         public TransactionHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,14 +52,18 @@ public class TransactionsAdapter extends RecyclerView.Adapter {
             desc = itemView.findViewById(R.id.transaction_desc);
             amount = itemView.findViewById(R.id.transaction_amount);
             date = itemView.findViewById(R.id.transaction_date);
+            to=itemView.findViewById(R.id.transaction_to);
+            from=itemView.findViewById(R.id.transaction_from);
         }
 
         public void bind(int position) {
 
-            type.setText(transactions.get(position).getType());
-            desc.setText(transactions.get(position).getDesc());
-            amount.setText(transactions.get(position).getAmount() + "$");
-            date.setText(transactions.get(position).getDate());
+            type.setText(tranactions.get(position).getType());
+            desc.setText(tranactions.get(position).getDesc());
+            amount.setText(tranactions.get(position).getAmount() + "$");
+            date.setText(tranactions.get(position).getDate());
+            to.setText(tranactions.get(position).getTo());
+            from.setText(tranactions.get(position).getFrom());
 
         }
     }

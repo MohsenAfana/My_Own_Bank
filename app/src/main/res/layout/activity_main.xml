@@ -10,6 +10,18 @@
         android:background="#fff"
         style="@style/Widget.Support.CoordinatorLayout">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/hom_loading"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:background="#BECCCBCB"
+        android:visibility="visible"
+        android:elevation="10dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="lf30_editor_H9d67Y.json"
+        app:lottie_loop="true" />
         <Toolbar
             android:background="#B41C76"
             android:layout_gravity="top"
@@ -25,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:text="Mohanad Alkrunz" />
+                tools:text="Mohanad Alkrunz" />
         </Toolbar>
 
         <FrameLayout
