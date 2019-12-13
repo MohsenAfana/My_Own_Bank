@@ -1,25 +1,32 @@
 package com.mohanad.myownbank.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mohanad.myownbank.R;
 import com.mohanad.myownbank.model.entity.Account;
+
 import com.mohanad.myownbank.model.entity.Transactions;
 
 import java.util.ArrayList;
@@ -30,15 +37,40 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class AccountsFragment extends Fragment {
-    private RecyclerView transactions_recycler;
 
+    private static final String TAG = "AccountsFragment";
     private RecyclerView accounts_recycler;
-    private List<Account> accounts;
+    private static List<Account> accounts;
     private LinearLayoutManager linearLayoutManager1;
-    private LinearLayoutManager linearLayoutManager2;
-    private DatabaseReference mDatabaseReference;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user;
     private FirebaseAuth auth;
+    private FrameLayout frameLayout;
+    private onClickInterface onclickInterface;
+    private String user_id;
+    static List<sendDataListener> dataChangeListeners = new ArrayList<>();
+
+    public static void addListener(sendDataListener changeListener){
+        dataChangeListeners.add(changeListener);
+    }
+
+    public static void deleteListener(sendDataListener changeListener){
+        dataChangeListeners.remove(changeListener);
+    }
+
+    public static void notifyDataChange(String account_id,String user_id){
+        for(sendDataListener changeListener : dataChangeListeners)
+            changeListener.sendPosition(account_id ,user_id);
+
+    }
+
+
+
+
+    public interface sendDataListener {
+        void sendPosition(String account_id,String user_id);
+
+    }
 
     public AccountsFragment() {
         // Required empty public constructor
@@ -51,6 +83,7 @@ public class AccountsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_accounts, container, false);
         decelerations(view);
         displayAccountsBalance();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.transactionsContainer, new TransactionsFragment()).addToBackStack(null).commit();
 
 
         return view;
@@ -58,11 +91,18 @@ public class AccountsFragment extends Fragment {
 
     private void decelerations(View view) {
         accounts_recycler = view.findViewById(R.id.accounts_recycler);
-        transactions_recycler = view.findViewById(R.id.recycler_view_TransAdapter);
         linearLayoutManager1 = new LinearLayoutManager(getContext());
-        linearLayoutManager2 = new LinearLayoutManager(getContext());
-        linearLayoutManager2.setReverseLayout(true);
-        linearLayoutManager2.setStackFromEnd(true);
+        frameLayout=view.findViewById(R.id.transactionsContainer);
+        onclickInterface =new onClickInterface() {
+            @Override
+            public void onClick(int i) {
+              String id=  accounts.get(i).getACCOUNT_ID();
+                notifyDataChange(id,user_id);
+                frameLayout.setVisibility(View.VISIBLE);
+
+
+            }
+        };
 
     }
 
@@ -70,40 +110,29 @@ public class AccountsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         String temp=user.getEmail();
-        String id=temp.substring(0,6);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(id);
-        ValueEventListener postListener = new ValueEventListener() {
+        user_id=temp.substring(0,6);
+        accounts = new ArrayList<>();
+
+        db.collection("/User/"+user_id+"/Accounts/")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                accounts_recycler.setLayoutManager(linearLayoutManager1);
-                accounts = new ArrayList<>();
-                Account account = new Account();
-                account.setFullAccountNumber(dataSnapshot.child("fullAccountNumber").getValue(String.class));
-                account.setAccountType(dataSnapshot.child("accountType").getValue(String.class));
-                account.setBalance(dataSnapshot.child("balance").getValue(double.class));
-                List<Transactions> transactions = new ArrayList<>();
-                if(dataSnapshot.child("transactions").getChildren()==null){
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    final List<Transactions> transactions = new ArrayList<>();
 
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Account account=new Account();
+                       account=document.toObject(Account.class);
+                       account.setACCOUNT_ID(document.getId());
+                        accounts.add(account);
+                    System.out.println("Here");
+                }  AccountsAdapter accountsAdapter = new AccountsAdapter(accounts,onclickInterface);
+                    accounts_recycler.setLayoutManager(linearLayoutManager1);
+                    accounts_recycler.setAdapter(accountsAdapter);
+                }else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
-                for (DataSnapshot traSnapshot: dataSnapshot.child("transactions").getChildren()) {
-                    Transactions t = traSnapshot.getValue(Transactions.class);
-                    transactions.add(t);
-                }
-                accounts.add(account);
-                AccountsAdapter accountsAdapter = new AccountsAdapter(accounts);
-                accounts_recycler.setAdapter(accountsAdapter);
-                transactions_recycler.setLayoutManager(linearLayoutManager2);
-                TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions);
-                transactions_recycler.setAdapter(transactionsAdapter);
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        mDatabaseReference.addValueEventListener(postListener);
+        });
     }
-
-
 }

@@ -63,12 +63,20 @@
     <style name="Transactions">
         <item name="android:fontFamily">@font/rajdhani</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">#B41C76</item>
         <item name="android:textStyle">bold</item>
 
     </style>
+    <style name="tabs">
 
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textStyle">bold</item>
+
+
+
+    </style>
 
 
 

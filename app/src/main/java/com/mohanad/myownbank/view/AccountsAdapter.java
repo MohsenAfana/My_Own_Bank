@@ -3,6 +3,7 @@ package com.mohanad.myownbank.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,9 +16,11 @@ import java.util.List;
 
 public class AccountsAdapter extends RecyclerView.Adapter {
     private List<Account> accounts;
+    onClickInterface onClickInterface;
 
-    public AccountsAdapter(List<Account> accounts) {
+    public AccountsAdapter(List<Account> accounts,onClickInterface onClickInterface) {
         this.accounts = accounts;
+        this.onClickInterface=onClickInterface;
     }
 
     @NonNull
@@ -29,9 +32,16 @@ public class AccountsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         AccountsAdapter.AccountHolder accountHolder = (AccountsAdapter.AccountHolder) holder;
         accountHolder.bind(position);
+
+        accountHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickInterface.onClick(position);
+            }
+        });
     }
 
     @Override
@@ -39,26 +49,39 @@ public class AccountsAdapter extends RecyclerView.Adapter {
         return accounts.size();
     }
 
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
     class AccountHolder extends RecyclerView.ViewHolder {
         TextView account_name;
         TextView balance;
         TextView account_number;
+        TextView ibanNumber;
+        TextView fullName;
+        TextView currency;
+        FrameLayout frameLayout;
 
 
         public AccountHolder(@NonNull View itemView) {
             super(itemView);
-
+            frameLayout=itemView.findViewById(R.id.myAccount);
             account_name = itemView.findViewById(R.id.account_name_adapter);
             balance = itemView.findViewById(R.id.account_balance_adapter);
             account_number = itemView.findViewById(R.id.account_number_adapter);
+            ibanNumber=itemView.findViewById(R.id.iban_number_adapter);
+            fullName=itemView.findViewById(R.id.account_fullName_adapter);
+            currency=itemView.findViewById(R.id.account_type_adapter);
         }
 
 
         public void bind(int position) {
             account_name.setText(accounts.get(position).getAccountType());
-            account_number.setText(accounts.get(position).getFullAccountNumber()+"");
-            balance.setText(accounts.get(position).getBalance() + "$");
-
+            account_number.setText( String.valueOf( accounts.get(position).getFullAccountNumber()));
+            balance.setText(accounts.get(position).getBalance() +accounts.get(position).getCurrencyLabel());
+            ibanNumber.setText(String.valueOf( accounts.get(position).getIBAN()) );
+            fullName.setText(String.valueOf(accounts.get(position).getFullName()));
+            currency.setText(String.valueOf(accounts.get(position).getAccountCurrency()));
         }
     }
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Own BAnk</string>
+    <string name="AccountCurrency">العملة</string>
+    <string name="Accounts">الحسابات</string>
+    <string name="Banking">بنكي</string>
+    <string name="BankingApp">بنكي</string>
+    <string name="Transactions">الحركات</string>
+    <string name="Withdrawal">سحب</string>
+    <string name="accountNo">رقم الحساب</string>
+    <string name="amount">المبلغ</string>
+    <string name="campaigns">الحملات</string>
+    <string name="birthday">تاريخ الميلاد</string>
+    <string name="cards">البطاقات</string>
+    <string name="confirm">تأكيد البيانات</string>
+    <string name="deposit">إيداع</string>
+    <string name="description">وصف</string>
+    <string name="eXCHANGE_RATES_TO_NIS">العملات مقابل الشيكل</string>
+    <string name="email">الايميل</string>
+    <string name="enter_email">ادخل الايميل الخاص بك</string>
+    <string name="enter_password">ادخل كلمة المرور الخاصة بك</string>
+    <string name="from">من :</string>
+    <string name="fullName">الاسم :</string>
+    <string name="ibanNo">رقم الاي بان :</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="login_email_hint">الايميل</string>
+    <string name="login_mobile_number_hint">رقم الهاتف</string>
+    <string name="login_name_hint">الاسم</string>
+    <string name="login_password_hint">كلمة المرور</string>
+    <string name="login_signup_hint">ليس لديك حساب ؟ أنشئ الأن</string>
+    <string name="mobileNo">رقم الهاتف</string>
+    <string name="near_to">بالقرب من</string>
+    <string name="password">كلمة المرور</string>
+    <string name="pay">ادفع</string>
+    <string name="register">تسجيل</string>
+    <string name="select_an_account">حدد حساب</string>
+    <string name="send">أرسل</string>
+    <string name="send_to">أرسل الى الأخرين</string>
+    <string name="terms"><u>أوافق على الشروط والقوانين</u></string>
+    <string name="to">الى :</string>
+    <string name="totalBalance">الرصيد الإجمالي</string>
+    <string name="select_amount">00.0 $</string>
+
+    <string name="userName">الاسم كامل</string>
+    <string name="Support">الدعم الفني</string>
+    <string name="SelectLanguage">Select Language</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="required">مطلوب</string>
+    <string name="are_y_sure">هل انت متأكد ؟</string>
+    <string name="ok">نعم</string>
+    <string name="no">لا</string>
+    <string name="Home">الرئيسية</string>
+    <string name="Transfer">الحوالات</string>
+    <string name="sure">Are you sure about this operation?</string>
+    <string name="not_enough">Your balance not enough to ensure this Operation</string>
+    <string name="empty">An field is empty</string>
+
+</resources>

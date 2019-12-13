@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.AccountsFragment"
-    android:background="#fff">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-  <androidx.recyclerview.widget.RecyclerView
-      android:padding="16dp"
-        android:id="@+id/accounts_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.4"
-        app:layout_constraintHeight_percent=".5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-      tools:listitem="@layout/account_layout"
-        />
-    <TextView
-        android:id="@+id/tranactions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:layout_marginTop="12dp"
-        android:layout_marginStart="12dp"
-        android:text="@string/Transactions"
-        style="@style/Transactions"
-        />
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.4"
-        android:padding="16dp"
-        android:id="@+id/recycler_view_TransAdapter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/accounts_recycler"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/transaction_layout"/>
-</LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+  <androidx.constraintlayout.widget.ConstraintLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:id="@+id/my_lay"
+      android:layout_height="match_parent"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context=".view.AccountsFragment"
+      android:background="#fff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="12dp"
+          android:layout_marginStart="12dp"
+          android:text="@string/Accounts"
+          style="@style/Transactions"
+          />
+      <androidx.recyclerview.widget.RecyclerView
+          android:padding="16dp"
+          android:id="@+id/accounts_recycler"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="0.4"
+          app:layout_constraintHeight_percent=".5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:listitem="@layout/account_layout"
+          />
+
+    </LinearLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/transactionsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+
+        >
+
+
+    </FrameLayout>
+
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+

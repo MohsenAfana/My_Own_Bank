@@ -58,7 +58,7 @@ public class CardsAdapter extends RecyclerView.Adapter {
         public void bind(int position) {
 
                 holder.setText(cards.get(position).getCardHolder());
-                number.setText(cards.get(position).getCardNumber());
+                number.setText(cards.get(position).getCardNomber());
                 validate.setText(cards.get(position).getValidate());
 
 

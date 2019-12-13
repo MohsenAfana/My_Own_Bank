@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home"
+        android:title="@string/Home"
         android:icon="@drawable/ic_icons8_home"/>
     <item
         android:id="@+id/accounts"
-        android:title="Accounts"
+        android:title="@string/Accounts"
         android:icon="@drawable/ic_credit_cards_payment"/>
     <item
         android:id="@+id/atm"
-        android:title="ATM's and Branches"
-        android:icon="@drawable/ic_map_location"/>
+        android:title="@string/pay"
+        android:icon="@drawable/ic_cash"/>
     <item
         android:id="@+id/transfer"
-        android:title="Transfer"
+        android:title="@string/Transfer"
 
         android:icon="@drawable/ic_transfer"/>
 </menu>

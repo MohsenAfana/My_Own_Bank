@@ -6,7 +6,7 @@ public class Card {
 
 
     private String cardHolder;
-    private String cardNumber;
+    private String cardNomber;
     private String validate;
 
     public String getCardHolder() {
@@ -17,12 +17,12 @@ public class Card {
         this.cardHolder = cardHolder;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getCardNomber() {
+        return cardNomber;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setCardNomber(String cardNumber) {
+        this.cardNomber = cardNumber;
     }
 
     public String getValidate() {

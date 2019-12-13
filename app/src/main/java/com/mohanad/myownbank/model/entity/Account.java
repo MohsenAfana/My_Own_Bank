@@ -1,6 +1,8 @@
 package com.mohanad.myownbank.model.entity;
 
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class Account {
@@ -10,10 +12,16 @@ public class Account {
     private double balance;
     private String accountCurrency;
     private String fullAccountNumber;
+    private String currencyLabel;
+
+
     private String fullName;
     private String mobileNumber;
     private List<Transactions> tranactions;
     private List<Card> cards;
+
+    private String ACCOUNT_ID;
+
 
     public String getIBAN() {
         return IBAN;
@@ -86,4 +94,30 @@ public class Account {
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String account=this.fullAccountNumber+"\n"
+                +this.getAccountType()+"\n"
+                +this.getFullName();
+        return account;
+    }
+
+    public String getACCOUNT_ID() {
+        return ACCOUNT_ID;
+    }
+
+    public void setACCOUNT_ID(String ACCOUNT_ID) {
+        this.ACCOUNT_ID = ACCOUNT_ID;
+    }
+
+    public String getCurrencyLabel() {
+        return currencyLabel;
+    }
+
+    public void setCurrencyLabel(String currencyLabel) {
+        this.currencyLabel = currencyLabel;
+    }
+
 }

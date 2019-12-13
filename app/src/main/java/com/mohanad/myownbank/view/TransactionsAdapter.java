@@ -67,4 +67,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter {
 
         }
     }
+
+    public void setTranactions(List<Transactions> tranactions) {
+        this.tranactions = tranactions;
+    }
 }

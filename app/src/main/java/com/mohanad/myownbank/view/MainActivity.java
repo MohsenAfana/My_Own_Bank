@@ -2,41 +2,79 @@ package com.mohanad.myownbank.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.mohanad.myownbank.MapsActivity;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.mohanad.myownbank.R;
+import com.mohanad.myownbank.model.entity.Account;
+
 import com.mohanad.myownbank.viewmodel.MainViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
     FrameLayout frameLayout;
     TextView holderName;
     BottomNavigationView bottomNavigationView;
-    Toolbar toolbar;
+    MaterialToolbar toolbar;
     MainViewModel mainViewModel;
-    private DatabaseReference mDatabaseReference;
     private FirebaseUser user;
     private FirebaseAuth auth;
     private LottieAnimationView animationView;
-    private int TIME_OUT=3000;
+    private int TIME_OUT = 5000;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String id;
+    List<Account> accounts;
+
+
+
+    public static final long DISCONNECT_TIMEOUT = 180000; // 3 min = 3 * 60 * 1000 ms
+
+
+    private Handler disconnectHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            return true;
+        }
+    });
+
+    private Runnable disconnectCallback = new Runnable() {
+        @Override
+        public void run() {
+            mainViewModel.logout();
+
+            openLoginActivity();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,27 +87,51 @@ public class MainActivity extends AppCompatActivity {
                 animationView.setVisibility(View.GONE);
 
             }
-        },TIME_OUT);
+        }, TIME_OUT);
         displayHolderName();
+
     }
 
 
     public void declaration() {
-        animationView=findViewById(R.id.hom_loading);
 
+
+        animationView = findViewById(R.id.hom_loading);
+        accounts = new ArrayList<>();
         mainViewModel = new MainViewModel();
         holderName = findViewById(R.id.holderName);
         frameLayout = findViewById(R.id.container);
         bottomNavigationView = findViewById(R.id.bottom_bar);
         toolbar = findViewById(R.id.toolBar);
-        toolbar.inflateMenu(R.menu.tool_bar_menu);
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                toolbarListeners(menuItem);
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.logout:
+                        new MaterialAlertDialogBuilder(MainActivity.this)
+                                .setTitle(getResources().getString(R.string.logout))
+                                .setMessage(getResources().getString(R.string.are_y_sure))
+                                .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        mainViewModel.logout();
+                                        openLoginActivity();
+                                    }
+                                })
+                                .setNegativeButton(getResources().getString(R.string.no), null)
+                                .show();
+
+                        break;
+                    case 1:
+
+                        break;
+                }
                 return false;
             }
         });
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -81,16 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void toolbarListeners(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.logout:
-                mainViewModel.logout();
-                openLoginActivity();
-                Toast.makeText(MainActivity.this,"clicked",Toast.LENGTH_LONG).show();
-                break;
-
-        }
-    }
 
     private void bottomListeners(MenuItem item) {
         switch (item.getItemId()) {
@@ -100,22 +152,48 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.accounts:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new AccountsFragment()).addToBackStack(null).commit();
-                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
                 break;
             case R.id.atm:
-                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
-                Intent intent   =new Intent(this, MapsActivity.class);
-                startActivity(intent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new PayFragment()).addToBackStack(null).commit();
+
 
                 break;
             case R.id.transfer:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new TransferFragment()).addToBackStack(null).commit();
-                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
 
                 break;
 
         }
     }
+
+
+    public void resetDisconnectTimer() {
+        disconnectHandler.removeCallbacks(disconnectCallback);
+        disconnectHandler.postDelayed(disconnectCallback, DISCONNECT_TIMEOUT);
+    }
+
+    public void stopDisconnectTimer() {
+        disconnectHandler.removeCallbacks(disconnectCallback);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        resetDisconnectTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resetDisconnectTimer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopDisconnectTimer();
+
+    }
+
 
     public void openLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
@@ -123,28 +201,31 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void displayHolderName(){
-        auth=FirebaseAuth.getInstance();
-        user=auth.getCurrentUser();
-        String temp=user.getEmail();
-        String id=temp.substring(0,6);
-
-
-        mDatabaseReference=FirebaseDatabase.getInstance().getReference().child("User").child(id);
-        ValueEventListener postListener = new ValueEventListener() {
+    public void displayHolderName() {
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        String temp = user.getEmail();
+        id = temp.substring(0, 6);
+        DocumentReference docRef = db.document("/User/" + id);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        holderName.setText(document.get("fullName").toString());
 
-                holderName.setText(dataSnapshot.child("fullName").getValue(String.class));
+                    } else {
+
+                    }
+                } else {
+
+                }
             }
+        });
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        mDatabaseReference.addValueEventListener(postListener);
 
     }
+
 
 }

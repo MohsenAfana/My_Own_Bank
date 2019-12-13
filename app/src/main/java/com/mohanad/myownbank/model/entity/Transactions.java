@@ -1,10 +1,10 @@
 package com.mohanad.myownbank.model.entity;
 
 
-import com.google.firebase.database.Exclude;
+
 
 public class Transactions {
-    @Exclude
+
 
     private double amount;
 
