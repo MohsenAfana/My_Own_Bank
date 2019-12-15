@@ -1,5 +1,6 @@
 package com.mohanad.myownbank.view;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,17 @@ import androidx.annotation.NonNull;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.Timestamp;
 import com.mohanad.myownbank.R;
 import com.mohanad.myownbank.model.entity.Transactions;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TransactionsAdapter extends RecyclerView.Adapter {
     List<Transactions> tranactions;
@@ -61,7 +69,14 @@ public class TransactionsAdapter extends RecyclerView.Adapter {
             type.setText(tranactions.get(position).getType());
             desc.setText(tranactions.get(position).getDesc());
             amount.setText(tranactions.get(position).getAmount() + "$");
-            date.setText(tranactions.get(position).getDate());
+            Timestamp mDate= tranactions.get(position).getDate();
+            long milli=mDate.getSeconds();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+            cal.setTimeInMillis(milli * 1000L);
+            String date2 = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
+
+            date.setText(date2);
             to.setText(tranactions.get(position).getTo());
             from.setText(tranactions.get(position).getFrom());
 

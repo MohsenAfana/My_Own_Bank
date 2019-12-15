@@ -70,6 +70,9 @@
     <string name="sure">Are you sure about this operation?</string>
     <string name="not_enough">Your balance not enough to ensure this Operation</string>
     <string name="empty">An field is empty</string>
+    <string name="about">Bank of Palestine (BOP) is the first and largest bank with a well-diversified branch network of 50 branches in Palestine, and a paid up capital of USD 150 million and assets of over USD 2.5 billion. Established in 1960, BOP has successfully expanded its presence and operations throughout the country and now has around 1,200 employees serving 600,000 customers. BOP has around 23% market share of deposits and loans in Palestine. Operating as a universal bank, BOP is engaged in retail, corporate, SME and Micro, and Diaspora banking operations, with the largest card processing operations in Palestine. BOP is the sole agent for issuing and acquiring Visa and MasterCard in Palestine with over 5,000 Point of Sale merchant terminals nationwide.
+</string>
+    <string name="about_us">About us</string>
 
 
     <string-array name="text">

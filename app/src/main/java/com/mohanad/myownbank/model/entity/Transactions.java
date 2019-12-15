@@ -1,7 +1,7 @@
 package com.mohanad.myownbank.model.entity;
 
 
-
+import com.google.firebase.Timestamp;
 
 public class Transactions {
 
@@ -12,7 +12,7 @@ public class Transactions {
 
     private String from;
 
-    private String date;
+    private Timestamp date;
 
     private String type;
     private String to;
@@ -60,11 +60,11 @@ public class Transactions {
         this.to = to;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 }

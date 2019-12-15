@@ -16,6 +16,7 @@ public class CardsAdapter extends RecyclerView.Adapter {
     private List<Card> cards;
 
     public CardsAdapter(List<Card> cards) {
+
         this.cards = cards;
     }
 
@@ -23,8 +24,7 @@ public class CardsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
-        CardsAdapter.CardHolder cardHolder = new CardsAdapter.CardHolder(view);
-        return cardHolder;
+        return new CardsAdapter.CardHolder(view);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CardsAdapter extends RecyclerView.Adapter {
         TextView validate;
 
 
-        public CardHolder(@NonNull View itemView) {
+        private CardHolder(@NonNull View itemView) {
             super(itemView);
 
             holder = itemView.findViewById(R.id.cardHolder);
@@ -55,7 +55,7 @@ public class CardsAdapter extends RecyclerView.Adapter {
 
 
 
-        public void bind(int position) {
+        private void bind(int position) {
 
                 holder.setText(cards.get(position).getCardHolder());
                 number.setText(cards.get(position).getCardNomber());

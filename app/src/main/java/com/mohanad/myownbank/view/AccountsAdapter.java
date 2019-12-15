@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AccountsAdapter extends RecyclerView.Adapter {
     private List<Account> accounts;
-    onClickInterface onClickInterface;
+    private  onClickInterface onClickInterface;
 
     public AccountsAdapter(List<Account> accounts,onClickInterface onClickInterface) {
         this.accounts = accounts;
@@ -27,8 +27,8 @@ public class AccountsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.account_layout, parent, false);
-        AccountsAdapter.AccountHolder accountHolder = new AccountsAdapter.AccountHolder(view);
-        return accountHolder;
+
+        return new AccountsAdapter.AccountHolder(view);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class AccountsAdapter extends RecyclerView.Adapter {
         FrameLayout frameLayout;
 
 
-        public AccountHolder(@NonNull View itemView) {
+        private AccountHolder(@NonNull View itemView) {
             super(itemView);
             frameLayout=itemView.findViewById(R.id.myAccount);
             account_name = itemView.findViewById(R.id.account_name_adapter);
@@ -75,7 +75,7 @@ public class AccountsAdapter extends RecyclerView.Adapter {
         }
 
 
-        public void bind(int position) {
+        private void bind(int position) {
             account_name.setText(accounts.get(position).getAccountType());
             account_number.setText( String.valueOf( accounts.get(position).getFullAccountNumber()));
             balance.setText(accounts.get(position).getBalance() +accounts.get(position).getCurrencyLabel());

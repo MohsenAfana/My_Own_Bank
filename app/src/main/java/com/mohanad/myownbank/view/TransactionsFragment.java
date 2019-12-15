@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mohanad.myownbank.R;
@@ -70,7 +71,7 @@ public class TransactionsFragment extends Fragment implements AccountsFragment.s
     @Override
     public void sendPosition(String account_id, String user_id) {
 
-        db.collection("/User/"+user_id+"/Accounts/"+account_id+"/Transactions/")
+        db.collection("/User/"+user_id+"/Accounts/"+account_id+"/Transactions/").orderBy("date", Query.Direction.ASCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

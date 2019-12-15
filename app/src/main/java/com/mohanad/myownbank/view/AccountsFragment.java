@@ -1,7 +1,6 @@
 package com.mohanad.myownbank.view;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +42,7 @@ public class AccountsFragment extends Fragment {
     private RecyclerView accounts_recycler;
     private static List<Account> accounts;
     private LinearLayoutManager linearLayoutManager1;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user;
     private FirebaseAuth auth;
     private FrameLayout frameLayout;
@@ -118,17 +118,21 @@ public class AccountsFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    final List<Transactions> transactions = new ArrayList<>();
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Account account=new Account();
-                       account=document.toObject(Account.class);
-                       account.setACCOUNT_ID(document.getId());
-                        accounts.add(account);
-                    System.out.println("Here");
-                }  AccountsAdapter accountsAdapter = new AccountsAdapter(accounts,onclickInterface);
-                    accounts_recycler.setLayoutManager(linearLayoutManager1);
-                    accounts_recycler.setAdapter(accountsAdapter);
+                    try {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Account account;
+                            account=document.toObject(Account.class);
+                            account.setACCOUNT_ID(document.getId());
+                            accounts.add(account);
+
+                        }  AccountsAdapter accountsAdapter = new AccountsAdapter(accounts,onclickInterface);
+                        accounts_recycler.setLayoutManager(linearLayoutManager1);
+                        accounts_recycler.setAdapter(accountsAdapter);
+                    }catch (Exception e){
+                        Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
+                    }
+
                 }else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }

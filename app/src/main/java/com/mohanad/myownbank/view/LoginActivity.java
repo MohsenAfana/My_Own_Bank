@@ -4,7 +4,7 @@ package com.mohanad.myownbank.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,6 +57,15 @@ public class LoginActivity extends AppCompatActivity {
         });
         language=findViewById(R.id.language);
         about=findViewById(R.id.about);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialAlertDialogBuilder(LoginActivity.this)
+                        .setTitle(getResources().getString(R.string.about_us))
+                        .setMessage(getResources().getString(R.string.about))
+                        .show();
+            }
+        });
         loading=findViewById(R.id.log_loading);
 
         tabLayout = findViewById(R.id.tab_layout);

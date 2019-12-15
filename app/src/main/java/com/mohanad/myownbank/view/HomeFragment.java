@@ -15,7 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +34,6 @@ import com.mohanad.myownbank.model.entity.Account;
 import com.mohanad.myownbank.model.entity.Card;
 import com.mohanad.myownbank.model.entity.Currency;
 import com.mohanad.myownbank.model.entity.CurrencyInfoObservable;
-import com.mohanad.myownbank.model.entity.Transactions;
 import com.mohanad.myownbank.viewmodel.HomeViewModel;
 
 import java.math.BigDecimal;
@@ -55,27 +54,27 @@ import lecho.lib.hellocharts.view.PieChartView;
 public class HomeFragment extends Fragment {
 
 
-    private ViewPager campaign_pager;
+
     private static final String TAG = "HomeFragment";
     private PieChartView pieChartView;
     private RecyclerView cardsRecycler;
     private List<Card> cards;
-    private LinearLayoutManager horizontal;
+
     private HomeViewModel homeViewModel = new HomeViewModel();
     private CurrencyInfoObservable currencyInfoObservable = homeViewModel.getCurrency();
 
-    PieChartData pieChartData = new PieChartData();
+    private PieChartData pieChartData = new PieChartData();
 
     private TextView usd_rate, euro_rate, tr_rate;
     private double fUSD, fEUR, fTR;
     private  double total_balance;
-    String id;
-    private FirebaseUser user;
-    private FirebaseAuth auth;
+    private String id;
+
+
     private List<Account> accounts;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    TabLayout tabLayout;
-    String flag="ILS";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -93,6 +92,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void declaration(View view) {
+        TabLayout tabLayout;
+        LinearLayoutManager horizontal;
+        ViewPager campaign_pager;
         tabLayout = view.findViewById(R.id.currency);
         pieChartView = view.findViewById(R.id.chart);
         accounts = new ArrayList<>();
@@ -115,24 +117,19 @@ public class HomeFragment extends Fragment {
                 switch (tab.getPosition()) {
                     case 0:
                         viewILS();
-                        System.out.println("Clicked");
-                        flag="ILS";
+
                         break;
                     case 1:
                         viewUSD();
-                        System.out.println("Clicked");
-                        flag="USD";
+
                         break;
                     case 2:
                         viewEUR();
-                        System.out.println("Clicked");
 
-                        flag="EUR";
                         break;
                     case 3:System.out.println("Clicked");
                         viewTUR();
 
-                        flag="TUR";
                         break;
                 }
             }
@@ -219,24 +216,49 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void displayTotalBalance() {
+    private void displayTotalBalance() {
+        FirebaseUser user;
+        FirebaseAuth auth;
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        String temp = user.getEmail();
-        id = temp.substring(0, 6);
+        try {
+            if(user!=null){
+                String temp = user.getEmail();
+                if(temp !=null)
+                id = temp.substring(0, 6);
+            }
+
+        }catch (Exception e){
+            Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
+        }
+
+
+
+     /*   try{
+
+        }catch (Exception e){
+            Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
+        }*/
 
         db.collection("/User/" + id + "/Cards/")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    try{
+                        if(task.getResult() !=null){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Card t = document.toObject(Card.class);
+                                cards.add(t);
+                            }
+                            CardsAdapter cardsAdapter = new CardsAdapter(cards);
+                            cardsRecycler.setAdapter(cardsAdapter);
+                        }
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Card t = document.toObject(Card.class);
-                        cards.add(t);
+                    }catch (Exception e){
+                        Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
                     }
-                    CardsAdapter cardsAdapter = new CardsAdapter(cards);
-                    cardsRecycler.setAdapter(cardsAdapter);
+
 
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -251,27 +273,33 @@ public class HomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    final List<Transactions> transactions = new ArrayList<>();
+                    try{
+                        if(task.getResult() != null){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Account account ;
+                                account = document.toObject(Account.class);
+                                account.setACCOUNT_ID(document.getId());
+                                accounts.add(account);
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Account account = new Account();
-                        account = document.toObject(Account.class);
-                        account.setACCOUNT_ID(document.getId());
-                        accounts.add(account);
-                        System.out.println("MOHANAD::HERE::" + account.getAccountCurrency());
-                        if (account.getAccountCurrency().equalsIgnoreCase("USD")) {
-                            total_balance += (account.getBalance() * fUSD);
-                            System.out.println(account.getBalance() + "");
-                        } else if (account.getAccountCurrency().equalsIgnoreCase("ILS")) {
-                            total_balance += account.getBalance();
-                        } else if (account.getAccountCurrency().equalsIgnoreCase("TR")) {
-                            total_balance += (account.getBalance() * fTR);
-                        } else if (account.getAccountCurrency().equalsIgnoreCase("EUR")) {
-                            total_balance += (account.getBalance() * fEUR);
+                                if (account.getAccountCurrency().equalsIgnoreCase("USD")) {
+                                    total_balance += (account.getBalance() * fUSD);
+
+                                } else if (account.getAccountCurrency().equalsIgnoreCase("ILS")) {
+                                    total_balance += account.getBalance();
+                                } else if (account.getAccountCurrency().equalsIgnoreCase("TR")) {
+                                    total_balance += (account.getBalance() * fTR);
+                                } else if (account.getAccountCurrency().equalsIgnoreCase("EUR")) {
+                                    total_balance += (account.getBalance() * fEUR);
+                                }
+                                db.collection("Users").document(id).update("totalBalance",total_balance);
+
+                            }
                         }
-                        db.collection("Users").document(id).update("totalBalance",total_balance);
-                        System.out.println(account.getBalance() + "MOHANAD::BALANCE::");
+
+                    }catch (Exception e){
+                        Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
                     }
+
                     chart();
 
                 } else {
@@ -283,19 +311,19 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void chart() {
+    private void chart() {
         int[] colors = {getResources().getColor(R.color.colorAccent2), getResources().getColor(R.color.colorPrimaryDark2), getResources().getColor(R.color.primaryTextColor), getResources().getColor(R.color.colorAccent)};
-        List pieData = new ArrayList<>();
+        List<SliceValue> pieData = new ArrayList<>();
         for (int i = 0; i < accounts.size(); i++) {
             pieData.add(new SliceValue((float) accounts.get(i).getBalance(), colors[i]).setLabel(accounts.get(i).getCurrencyLabel()));
 
         }
-        Double toBeTruncated = new Double(total_balance);
+        double toBeTruncated = total_balance;
 
-        Double truncatedDouble = BigDecimal.valueOf(toBeTruncated)
+        double truncatedDouble = BigDecimal.valueOf(toBeTruncated)
                 .setScale(3, RoundingMode.HALF_UP)
                 .doubleValue();
-        System.out.println(accounts.size() + "MOHANAD::::");
+
 
         pieChartData.setValues(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
@@ -305,10 +333,10 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void updateUi(double x ,String s){
-        Double toBeTruncated = new Double(x);
+    private void updateUi(double x ,String s){
 
-        Double truncatedDouble = BigDecimal.valueOf(toBeTruncated)
+
+        double truncatedDouble = BigDecimal.valueOf(x)
                 .setScale(3, RoundingMode.HALF_UP)
                 .doubleValue();
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
