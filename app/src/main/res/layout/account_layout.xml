@@ -27,29 +27,25 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:fontFamily="@font/rajdhani"
                     android:id="@+id/account_name_adapter"
+                    style="@style/accountType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="CURRENT ACCOUNT/EMPLOYEE SALARY"
-                    android:textColor="#B41C76"
-                    android:textStyle="bold"
-
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    tools:text="CURRENT ACCOUNT/EMPLOYEE SALARY"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
                 <TextView
-                    android:fontFamily="@font/rajdhani"
                     android:id="@+id/account_balance_adapter"
+                    style="@style/information"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="$120"
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
-                    android:textStyle="bold"
-                    android:textColor="#000"/>
+                    tools:text="$120"
+                   />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,19 +54,18 @@
                 >
                 <TextView
                     android:fontFamily="@font/rajdhani"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/accountNo"/>
                 <TextView
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/rajdhani"
                     android:id="@+id/account_number_adapter"
+                    style="@style/information"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     tools:text="4520182364200"
-                    android:textColor="#000"
-                    android:textStyle="bold"/>
+
+                   />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,19 +74,16 @@
                 >
                 <TextView
                     android:fontFamily="@font/rajdhani"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ibanNo"/>
                 <TextView
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/rajdhani"
                     android:id="@+id/iban_number_adapter"
+                    style="@style/information"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="4520182364200"
-                    android:textColor="#000"
-                    android:textStyle="bold"/>
+                    android:layout_marginStart="4dp"
+                    tools:text="4520182364200"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,13 +98,13 @@
                     android:text="@string/fullName"/>
                 <TextView
                     android:layout_marginStart="4dp"
-                    android:fontFamily="@font/rajdhani"
+
                     android:id="@+id/account_fullName_adapter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="4520182364200"
-                    android:textColor="#000"
-                    android:textStyle="bold"/>
+                  style="@style/information"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -127,13 +119,12 @@
                     android:text="@string/AccountCurrency"/>
                 <TextView
                     android:layout_marginStart="4dp"
-                    android:fontFamily="@font/rajdhani"
+
                     android:id="@+id/account_type_adapter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="@string/USD"
-                    android:textColor="#000"
-                    android:textStyle="bold"/>
+                   style="@style/information"/>
             </LinearLayout>
 
 

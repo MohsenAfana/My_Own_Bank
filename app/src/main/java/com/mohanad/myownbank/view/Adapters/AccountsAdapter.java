@@ -1,4 +1,4 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mohanad.myownbank.R;
 import com.mohanad.myownbank.model.entity.Account;
+import com.mohanad.myownbank.view.Listeners.onClickInterface;
 
 import java.util.List;
 
 public class AccountsAdapter extends RecyclerView.Adapter {
     private List<Account> accounts;
-    private  onClickInterface onClickInterface;
+    private com.mohanad.myownbank.view.Listeners.onClickInterface onClickInterface;
 
     public AccountsAdapter(List<Account> accounts,onClickInterface onClickInterface) {
         this.accounts = accounts;

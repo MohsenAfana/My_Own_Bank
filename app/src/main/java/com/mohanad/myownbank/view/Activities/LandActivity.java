@@ -1,4 +1,4 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +18,7 @@ public class LandActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(LandActivity.this,LoginActivity.class));
+                startActivity(new Intent(LandActivity.this, LoginActivity.class));
                 finish();
             }
         },TIME_OUT);

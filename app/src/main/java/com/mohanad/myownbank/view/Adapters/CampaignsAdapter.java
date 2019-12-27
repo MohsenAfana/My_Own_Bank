@@ -1,4 +1,4 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

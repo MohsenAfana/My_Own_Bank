@@ -1,4 +1,4 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Fragments;
 
 
 import android.content.Context;
@@ -6,24 +6,26 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mohanad.myownbank.R;
-import com.mohanad.myownbank.model.entity.Account;
+
 import com.mohanad.myownbank.model.entity.Transactions;
+import com.mohanad.myownbank.view.Adapters.TransactionsAdapter;
+import com.mohanad.myownbank.view.Fragments.AccountsFragment;
+import com.mohanad.myownbank.viewmodel.TransactionsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +35,11 @@ import java.util.List;
  */
 public class TransactionsFragment extends Fragment implements AccountsFragment.sendDataListener {
 
-    static int index;
-    private static String TAG="TransactionsFragment";
-    RecyclerView transactionsRecycler;
-    LinearLayoutManager linearLayoutManager2;
-    static List<Transactions> transactions;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static String TAG = "TransactionsFragment";
+    private RecyclerView transactionsRecycler;
+    private LinearLayoutManager linearLayoutManager2;
+    private static List<Transactions> transactions;
+
     public TransactionsFragment() {
         // Required empty public constructor
     }
@@ -48,7 +49,7 @@ public class TransactionsFragment extends Fragment implements AccountsFragment.s
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_transactions, container, false);
+        View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
 
         declarations(view);
@@ -64,36 +65,38 @@ public class TransactionsFragment extends Fragment implements AccountsFragment.s
         linearLayoutManager2.setReverseLayout(true);
         linearLayoutManager2.setStackFromEnd(true);
         transactionsRecycler.setLayoutManager(linearLayoutManager2);
-        transactions=new ArrayList<>();
+        transactions = new ArrayList<>();
 
     }
 
     @Override
     public void sendPosition(String account_id, String user_id) {
+        TransactionsViewModel transactionsVM = new TransactionsViewModel(account_id);
+        LiveData<Task<QuerySnapshot>> liveData = transactionsVM.getdataSnapshotLiveData();
 
-        db.collection("/User/"+user_id+"/Accounts/"+account_id+"/Transactions/").orderBy("date", Query.Direction.ASCENDING)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        liveData.observe(this, new androidx.lifecycle.Observer<Task<QuerySnapshot>>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    final List<Transactions> transactions = new ArrayList<>();
+            public void onChanged(Task<QuerySnapshot> querySnapshotTask) {
+                if (querySnapshotTask.isSuccessful()) {
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Transactions t = new Transactions();
-                        t = document.toObject(Transactions.class);
-                        transactions.add(t);
-                        System.out.println("Here");
+                    if (querySnapshotTask.getResult() != null) {
+                        for (QueryDocumentSnapshot document : querySnapshotTask.getResult()) {
+                            Transactions t;
+                            t = document.toObject(Transactions.class);
+                            transactions.add(t);
+
+                        }
+                        TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions, getContext());
+                        transactionsRecycler.setLayoutManager(linearLayoutManager2);
+                        transactionsRecycler.setAdapter(transactionsAdapter);
+                        Log.d(TAG, "Success");
                     }
-                    TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions);
-                    transactionsRecycler.setLayoutManager(linearLayoutManager2);
-                    transactionsRecycler.setAdapter(transactionsAdapter);
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
+
                 }
-
-
             }
-        });}
+        });
+
+    }
 
     @Override
     public void onResume() {

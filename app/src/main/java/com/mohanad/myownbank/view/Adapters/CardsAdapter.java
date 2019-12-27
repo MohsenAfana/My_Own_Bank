@@ -1,8 +1,11 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Adapters;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,10 +17,11 @@ import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter {
     private List<Card> cards;
-
-    public CardsAdapter(List<Card> cards) {
+    private Context context;
+    public CardsAdapter(List<Card> cards,Context context) {
 
         this.cards = cards;
+        this.context=context;
     }
 
     @NonNull
@@ -42,14 +46,17 @@ public class CardsAdapter extends RecyclerView.Adapter {
         TextView holder;
         TextView number;
         TextView validate;
-
+        TextView ccv;
+        ImageView cardType;
 
         private CardHolder(@NonNull View itemView) {
             super(itemView);
 
-            holder = itemView.findViewById(R.id.cardHolder);
+            holder = itemView.findViewById(R.id.card_name);
             number = itemView.findViewById(R.id.card_number);
-            validate = itemView.findViewById(R.id.validate);
+            validate = itemView.findViewById(R.id.card_expire);
+            ccv=itemView.findViewById(R.id.card_cvv);
+            cardType=itemView.findViewById(R.id.card_type);
         }
 
 
@@ -60,7 +67,13 @@ public class CardsAdapter extends RecyclerView.Adapter {
                 holder.setText(cards.get(position).getCardHolder());
                 number.setText(cards.get(position).getCardNomber());
                 validate.setText(cards.get(position).getValidate());
-
+                ccv.setText(cards.get(position).getCcv());
+                if(cards.get(position).getType().equalsIgnoreCase("visa")){
+                    cardType.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.whiteCardColor)));
+                    cardType.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_visa));
+                }else{
+                    cardType.setImageDrawable(context.getResources().getDrawable(R.drawable.master));
+                }
 
         }
     }}

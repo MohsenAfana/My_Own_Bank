@@ -1,10 +1,9 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Activities;
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -25,7 +24,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.mohanad.myownbank.MapsActivity;
 import com.mohanad.myownbank.R;
 
 import java.util.Locale;
@@ -52,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
         language=findViewById(R.id.language);
@@ -60,14 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialAlertDialogBuilder(LoginActivity.this)
-                        .setTitle(getResources().getString(R.string.about_us))
-                        .setMessage(getResources().getString(R.string.about))
-                        .show();
+               showAbout();
             }
         });
         loading=findViewById(R.id.log_loading);
-
         tabLayout = findViewById(R.id.tab_layout);
         usernameEditText = findViewById(R.id.account_number);
         passwordEditText = findViewById(R.id.password);
@@ -103,6 +97,13 @@ public class LoginActivity extends AppCompatActivity {
                 call_support();
             }
         });
+    }
+
+    private void showAbout() {
+        new MaterialAlertDialogBuilder(LoginActivity.this)
+                .setTitle(getResources().getString(R.string.about_us))
+                .setMessage(getResources().getString(R.string.about))
+                .show();
     }
 
     private void openMap() {

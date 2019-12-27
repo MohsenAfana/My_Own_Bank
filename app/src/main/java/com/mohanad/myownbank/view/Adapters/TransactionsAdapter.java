@@ -1,5 +1,7 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Adapters;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.common.io.Resources;
 import com.google.firebase.Timestamp;
 import com.mohanad.myownbank.R;
 import com.mohanad.myownbank.model.entity.Transactions;
@@ -25,9 +28,11 @@ import java.util.Locale;
 
 public class TransactionsAdapter extends RecyclerView.Adapter {
     List<Transactions> tranactions;
+    Context context;
 
-    public TransactionsAdapter(List<Transactions> tranactions) {
+    public TransactionsAdapter(List<Transactions> tranactions ,Context context) {
         this.tranactions = tranactions;
+        this.context=context;
     }
 
     @NonNull
@@ -64,14 +69,22 @@ public class TransactionsAdapter extends RecyclerView.Adapter {
             from=itemView.findViewById(R.id.transaction_from);
         }
 
+        @SuppressLint("ResourceAsColor")
         public void bind(int position) {
 
-            type.setText(tranactions.get(position).getType());
+            if(tranactions.get(position).getType().equalsIgnoreCase("withdraw")){
+                type.setText(tranactions.get(position).getType());
+                type.setTextColor(context.getResources().getColor(R.color.redLight));
+            }else{
+                type.setText(tranactions.get(position).getType());
+                type.setTextColor(context.getResources().getColor(R.color.colorAccent1));
+            }
+
             desc.setText(tranactions.get(position).getDesc());
             amount.setText(tranactions.get(position).getAmount() + "$");
             Timestamp mDate= tranactions.get(position).getDate();
             long milli=mDate.getSeconds();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
             Calendar cal = Calendar.getInstance(Locale.ENGLISH);
             cal.setTimeInMillis(milli * 1000L);
             String date2 = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();

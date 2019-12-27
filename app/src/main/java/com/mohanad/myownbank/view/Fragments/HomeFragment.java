@@ -1,31 +1,25 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Fragments;
 
 
 import android.graphics.Color;
 import android.os.Bundle;
 
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,6 +28,8 @@ import com.mohanad.myownbank.model.entity.Account;
 import com.mohanad.myownbank.model.entity.Card;
 import com.mohanad.myownbank.model.entity.Currency;
 import com.mohanad.myownbank.model.entity.CurrencyInfoObservable;
+import com.mohanad.myownbank.view.Adapters.CampaignsAdapter;
+import com.mohanad.myownbank.view.Adapters.CardsAdapter;
 import com.mohanad.myownbank.viewmodel.HomeViewModel;
 
 import java.math.BigDecimal;
@@ -51,47 +47,118 @@ import lecho.lib.hellocharts.view.PieChartView;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class HomeFragment extends Fragment {
 
-
-
-    private static final String TAG = "HomeFragment";
     private PieChartView pieChartView;
     private RecyclerView cardsRecycler;
     private List<Card> cards;
-
     private HomeViewModel homeViewModel = new HomeViewModel();
     private CurrencyInfoObservable currencyInfoObservable = homeViewModel.getCurrency();
-
     private PieChartData pieChartData = new PieChartData();
-
     private TextView usd_rate, euro_rate, tr_rate;
     private double fUSD, fEUR, fTR;
-    private  double total_balance;
+    private double total_balance;
     private String id;
-
-
     private List<Account> accounts;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
 
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         declaration(view);
-        displayTotalBalance();
-
+        displayMyTotal();
         return view;
 
     }
 
+    private void displayMyTotal() {
+
+
+        FirebaseUser user;
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        try {
+            if (user != null) {
+                String temp = user.getEmail();
+                if (temp != null)
+                    id = temp.substring(0, 6);
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG).show();
+        }
+
+        LiveData<Task<QuerySnapshot>> liveData = homeViewModel.getdataSnapshotLiveData();
+        liveData.observe(this, new androidx.lifecycle.Observer<Task<QuerySnapshot>>() {
+            @Override
+            public void onChanged(Task<QuerySnapshot> querySnapshotTask) {
+                if (querySnapshotTask.isSuccessful()) {
+
+                    if (querySnapshotTask.getResult() != null) {
+                        for (QueryDocumentSnapshot document : querySnapshotTask.getResult()) {
+                            Card t = document.toObject(Card.class);
+                            cards.add(t);
+
+                        }
+                        CardsAdapter cardsAdapter = new CardsAdapter(cards,getContext());
+                        cardsRecycler.setAdapter(cardsAdapter);
+                    }
+
+                }
+            }
+        });
+
+
+        LiveData<Task<QuerySnapshot>> liveDataAccounts = homeViewModel.getdataSnapshotLiveDataAccounts();
+        liveDataAccounts.observe(this, new androidx.lifecycle.Observer<Task<QuerySnapshot>>() {
+            @Override
+            public void onChanged(Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null)
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Account account;
+                            account = document.toObject(Account.class);
+                            account.setACCOUNT_ID(document.getId());
+                            accounts.add(account);
+
+                            if (account.getAccountCurrency().equalsIgnoreCase("USD")) {
+                                total_balance += (account.getBalance() * fUSD);
+
+                            } else if (account.getAccountCurrency().equalsIgnoreCase("ILS")) {
+                                total_balance += account.getBalance();
+                            } else if (account.getAccountCurrency().equalsIgnoreCase("TR")) {
+                                total_balance += (account.getBalance() * fTR);
+                            } else if (account.getAccountCurrency().equalsIgnoreCase("EUR")) {
+                                total_balance += (account.getBalance() * fEUR);
+                            }
+
+                            db.collection("User").document(id).update("totalBalance", total_balance);
+
+                        }
+                    chart();
+
+                }
+            }
+        });
+
+
+    }
+
     private void declaration(View view) {
+        TextView viewAll=view.findViewById(R.id.view_all);
+        viewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewCards();
+            }
+        });
         TabLayout tabLayout;
         LinearLayoutManager horizontal;
         ViewPager campaign_pager;
@@ -127,7 +194,7 @@ public class HomeFragment extends Fragment {
                         viewEUR();
 
                         break;
-                    case 3:System.out.println("Clicked");
+                    case 3:
                         viewTUR();
 
                         break;
@@ -151,36 +218,38 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void viewCards() {
+
+        getActivity(). getSupportFragmentManager().beginTransaction().
+                replace(R.id.home, new DisplayCardsFragment()).
+                addToBackStack(null).commit();
+    }
+
     private void viewUSD() {
-        double temp=total_balance;
-        temp/=fUSD;
-        updateUi(temp,"USD");
+        double temp = total_balance;
+        temp /= fUSD;
+        updateUi(temp, "USD");
     }
 
     private void viewILS() {
-        double temp=total_balance;
+        double temp = total_balance;
 
-    updateUi(temp,"ILS");
+        updateUi(temp, "ILS");
     }
-
 
     private void viewEUR() {
-        double temp=total_balance;
-         temp/=fEUR;
+        double temp = total_balance;
+        temp /= fEUR;
 
-        updateUi(temp,"EUR");
+        updateUi(temp, "EUR");
     }
-
 
     private void viewTUR() {
-        double temp=total_balance;
-        temp/=fTR;
+        double temp = total_balance;
+        temp /= fTR;
 
-        updateUi(temp,"TR");
+        updateUi(temp, "TR");
     }
-
-
-
 
     private void showCurrency() {
         currencyInfoObservable.addObserver(new Observer() {
@@ -216,101 +285,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void displayTotalBalance() {
-        FirebaseUser user;
-        FirebaseAuth auth;
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        try {
-            if(user!=null){
-                String temp = user.getEmail();
-                if(temp !=null)
-                id = temp.substring(0, 6);
-            }
-
-        }catch (Exception e){
-            Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
-        }
-
-
-
-     /*   try{
-
-        }catch (Exception e){
-            Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
-        }*/
-
-        db.collection("/User/" + id + "/Cards/")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    try{
-                        if(task.getResult() !=null){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Card t = document.toObject(Card.class);
-                                cards.add(t);
-                            }
-                            CardsAdapter cardsAdapter = new CardsAdapter(cards);
-                            cardsRecycler.setAdapter(cardsAdapter);
-                        }
-
-                    }catch (Exception e){
-                        Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
-                    }
-
-
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-
-        });
-
-
-        db.collection("/User/" + id + "/Accounts/")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    try{
-                        if(task.getResult() != null){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Account account ;
-                                account = document.toObject(Account.class);
-                                account.setACCOUNT_ID(document.getId());
-                                accounts.add(account);
-
-                                if (account.getAccountCurrency().equalsIgnoreCase("USD")) {
-                                    total_balance += (account.getBalance() * fUSD);
-
-                                } else if (account.getAccountCurrency().equalsIgnoreCase("ILS")) {
-                                    total_balance += account.getBalance();
-                                } else if (account.getAccountCurrency().equalsIgnoreCase("TR")) {
-                                    total_balance += (account.getBalance() * fTR);
-                                } else if (account.getAccountCurrency().equalsIgnoreCase("EUR")) {
-                                    total_balance += (account.getBalance() * fEUR);
-                                }
-                                db.collection("Users").document(id).update("totalBalance",total_balance);
-
-                            }
-                        }
-
-                    }catch (Exception e){
-                        Toast.makeText(getContext(),"An error occured",Toast.LENGTH_LONG).show();
-                    }
-
-                    chart();
-
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-
-
-    }
-
     private void chart() {
         int[] colors = {getResources().getColor(R.color.colorAccent2), getResources().getColor(R.color.colorPrimaryDark2), getResources().getColor(R.color.primaryTextColor), getResources().getColor(R.color.colorAccent)};
         List<SliceValue> pieData = new ArrayList<>();
@@ -333,19 +307,16 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void updateUi(double x ,String s){
+    private void updateUi(double x, String s) {
 
 
         double truncatedDouble = BigDecimal.valueOf(x)
                 .setScale(3, RoundingMode.HALF_UP)
                 .doubleValue();
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-        pieChartData.setHasCenterCircle(true).setCenterText1(truncatedDouble + " "+s).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+        pieChartData.setHasCenterCircle(true).setCenterText1(truncatedDouble + " " + s).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
         pieChartData.setCenterText1FontSize(14);
         pieChartView.setPieChartData(pieChartData);
     }
-
-
-
 
 }

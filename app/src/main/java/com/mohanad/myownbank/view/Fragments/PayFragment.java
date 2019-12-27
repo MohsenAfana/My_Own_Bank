@@ -1,4 +1,4 @@
-package com.mohanad.myownbank.view;
+package com.mohanad.myownbank.view.Fragments;
 
 
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.mohanad.myownbank.R;
  * A simple {@link Fragment} subclass.
  */
 public class PayFragment extends Fragment {
+
+    private static final String TAG = "PayFragment";
 
     MaterialCardView jawwal,wataniya;
     MaterialCardView electricity,paltel;
@@ -39,24 +41,20 @@ public class PayFragment extends Fragment {
 
     }
 
-    public void declaration(View view){
-        jawwal=view.findViewById(R.id.jawwal);
-        wataniya=view.findViewById(R.id.wataniya);
-        electricity=view.findViewById(R.id.electricity);
-        paltel=view.findViewById(R.id.paltel);
-        playstation=view.findViewById(R.id.playstation);
-        steam=view.findViewById(R.id.steam);
+    private void declaration(View view){
 
+        com.balysv.materialripple.MaterialRippleLayout jawwal=view.findViewById(R.id.jawwal);
         jawwal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new MaterialAlertDialogBuilder(getContext())
-                        .setTitle("Jawwal Credit")
+                        .setTitle("Jawwal bill")
                         .setMessage("This service isn't available")
                         .show();
             }
         });
 
+        com.balysv.materialripple.MaterialRippleLayout wataniya=view.findViewById(R.id.wataniya);
         wataniya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +64,7 @@ public class PayFragment extends Fragment {
                         .show();
             }
         });
+        com.balysv.materialripple.MaterialRippleLayout electricity=view.findViewById(R.id.electricity);
         electricity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +74,8 @@ public class PayFragment extends Fragment {
                         .show();
             }
         });
+
+        com.balysv.materialripple.MaterialRippleLayout paltel=view.findViewById(R.id.paltel);
         paltel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +85,8 @@ public class PayFragment extends Fragment {
                         .show();
             }
         });
+
+        com.balysv.materialripple.MaterialRippleLayout playstation=view.findViewById(R.id.playstation);
         playstation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +96,7 @@ public class PayFragment extends Fragment {
                         .show();
             }
         });
+        com.balysv.materialripple.MaterialRippleLayout steam=view.findViewById(R.id.steam);
         steam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

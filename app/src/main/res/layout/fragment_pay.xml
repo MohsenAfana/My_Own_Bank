@@ -9,44 +9,73 @@
     android:fillViewport="true"
     android:background="#fff"
     >
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp"
-        android:background="#B7B41C76">
+        android:background="#FFFFFF">
 
         <LinearLayout
             android:layout_marginTop="30dp"
             android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent=".2"
+            app:layout_constraintHeight_percent=".23"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.card.MaterialCardView
+
                 style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="0dp"
-                android:id="@+id/jawwal"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                android:elevation="6dp"
-              app:rippleColor="#000"
+                app:cardBackgroundColor="#8096989A"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
 
-
-                >
-
-                <ImageView
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleBlack"
+                    android:id="@+id/jawwal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/jawwal_logo" />
+
+                    >
+
+                    <LinearLayout
+
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                         android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_large">
+
+                        <ImageView
+
+                            android:id="@+id/image"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/jawwal_logo" />
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:text="Jawwal"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
 
             </com.google.android.material.card.MaterialCardView>
             <View
@@ -54,22 +83,51 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.1"/>
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.MaterialComponents.CardView"
-                android:layout_width="0dp"
-                android:id="@+id/wataniya"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                android:elevation="6dp"
-                app:rippleColor="#000"
-                >
 
-                <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="#8096989A"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
+
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleBlack"
+                    android:id="@+id/wataniya"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/watanya_logo" />
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_large">
+
+                        <ImageView
+
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/watanya_logo" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:text="Wataniya"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
 
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -77,7 +135,7 @@
             android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent=".2"
+            app:layout_constraintHeight_percent=".23"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,22 +143,51 @@
             android:layout_marginTop="16dp">
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.MaterialComponents.CardView"
+
                 android:layout_width="0dp"
-                android:id="@+id/electricity"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                android:elevation="6dp"
-                app:rippleColor="#000"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="#8096989A"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
 
-                >
-
-                <ImageView
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleBlack"
+                    android:id="@+id/electricity"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/electricity" />
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_large">
+
+                        <ImageView
+
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/electricity" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:text="Electricity"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
 
             </com.google.android.material.card.MaterialCardView>
             <View
@@ -108,22 +195,51 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.1"/>
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.MaterialComponents.CardView"
-                android:layout_width="0dp"
-                android:id="@+id/paltel"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                android:elevation="6dp"
-                app:rippleColor="#000"
-                >
 
-                <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="#8096989A"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
+
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleBlack"
+                    android:id="@+id/paltel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/paltel_new_logo" />
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_large">
+
+                        <ImageView
+
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/paltel_new_logo" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:text="Paltel"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
 
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -131,7 +247,7 @@
             android:id="@+id/row3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent=".2"
+            app:layout_constraintHeight_percent=".23"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,22 +255,51 @@
             android:layout_marginTop="16dp">
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.MaterialComponents.CardView"
+
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                android:elevation="6dp"
-                android:id="@+id/playstation"
-                app:rippleColor="#000"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="#8096989A"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
 
-                >
-
-                <ImageView
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleBlack"
+                    android:id="@+id/playstation"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/psstore_shoppingbag" />
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_large">
+
+                        <ImageView
+
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/psstore_shoppingbag" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:text="Play Station"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
 
             </com.google.android.material.card.MaterialCardView>
             <View
@@ -162,22 +307,52 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.1"/>
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.MaterialComponents.CardView"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                android:elevation="6dp"
-                android:id="@+id/steam"
-                app:rippleColor="#000"
-                >
 
-                <ImageView
+
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="#8096989A"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
+
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleBlack"
+                    android:id="@+id/steam"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/steam_logo" />
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_large">
+
+                        <ImageView
+
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/steam_logo" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:text="Steam"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
 
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

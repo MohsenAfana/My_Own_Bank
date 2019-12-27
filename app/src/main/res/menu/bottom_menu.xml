@@ -11,7 +11,7 @@
         android:title="@string/Accounts"
         android:icon="@drawable/ic_credit_cards_payment"/>
     <item
-        android:id="@+id/atm"
+        android:id="@+id/pay"
         android:title="@string/pay"
         android:icon="@drawable/ic_cash"/>
     <item
