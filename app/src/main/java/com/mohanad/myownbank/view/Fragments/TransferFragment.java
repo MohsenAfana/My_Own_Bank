@@ -216,7 +216,7 @@ public class TransferFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Account t = document.toObject(Account.class);
                                 receiverAccounts.add(t);
-                                System.out.println(t.toString());
+
                             }
                         for (int i = 0; i < receiverAccounts.size(); i++) {
                             if (receiver.equalsIgnoreCase(receiverAccounts.get(i).getFullAccountNumber())) {
@@ -224,7 +224,7 @@ public class TransferFragment extends Fragment {
                                 receiverName = receiverAccounts.get(i).getFullName();
                                 receiver_name.setText(receiverName);
                                 receiverNumber = receiverAccounts.get(i).getFullAccountNumber();
-                                System.out.println(receiverName);
+
                                 break;
                             }
                         }
@@ -325,7 +325,7 @@ public class TransferFragment extends Fragment {
                             }
                         }
                     })
-                    .setNegativeButton("NO", null)
+                    .setNegativeButton(getResources().getString(R.string.no), null)
                     .show();
         }
 

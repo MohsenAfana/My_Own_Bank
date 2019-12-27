@@ -53,9 +53,10 @@
             android:layout_weight="3"
             android:layout_height="match_parent"
             android:text="Bank of Palestine"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="bottom"
+            android:singleLine="true"
             android:fontFamily="@font/rajdhani"
             />
 

@@ -72,10 +72,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                     android:textSize="12sp"
+                     android:textSize="8sp"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:text="@string/eXCHANGE_RATES_TO_NIS"
+                    android:singleLine="true"
                     android:textColor="#FFFFFF"/>
 
 
@@ -262,6 +263,7 @@
                         android:layout_height="match_parent"
                         android:text="@string/ILS"
                         android:id="@+id/mILS"
+
                         />
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
@@ -287,10 +289,13 @@
 
            <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/cards_recycler"
-               android:layout_marginTop="8dp"
+
+               android:padding="2dp"
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:layout_weight=".5"
+              tools:listitem="@layout/card_layout"
+               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                app:layout_constraintTop_toBottomOf="@id/accounts"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintEnd_toEndOf="parent"

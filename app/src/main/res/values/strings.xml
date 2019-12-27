@@ -78,10 +78,13 @@
     <string name="view_all">View All</string>
 
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="add_card">Add Card</string>
-    <string name="Visa">Visa</string>
-    <string name="bank_OfPalestine">Bank of Palestine</string>
+    <string name="Visa" translatable="false">Visa</string>
+    <string name="bank_OfPalestine" translatable="false">Bank of Palestine</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="completed">Completed</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string-array name="text">

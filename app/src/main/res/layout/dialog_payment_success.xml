@@ -74,7 +74,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="DATE"
+                                android:text="@string/date"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                                 android:textColor="@color/grey_40" />
 
@@ -87,7 +87,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="TIME"
+                                android:text="@string/time"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                                 android:textColor="@color/grey_40" />
 
@@ -145,7 +145,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="TO"
+                                android:text="@string/to"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                                 android:textColor="@color/grey_40" />
 
@@ -192,7 +192,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="AMOUNT"
+                                android:text="@string/amount"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                                 android:textColor="@color/grey_40" />
 
@@ -212,7 +212,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="COMPLETED"
+                            android:text="@string/completed"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                             android:textColor="@color/grey_40" />
 
